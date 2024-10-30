@@ -1,12 +1,65 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, Clock, Star, ChevronRight, Shield } from 'lucide-react'
 import Link from 'next/link'
-import { subCategories } from './data.ts'
+import { subCategories } from './data'
+import type { Service } from './data'
 
-export function CategoryContent({ slug }: { slug: string }) {
-  const services = subCategories[slug] || []
+interface CategoryContentProps {
+  slug: Promise<string>;
+}
+
+export function CategoryContent({ slug }: CategoryContentProps) {
+  const [currentSlug, setCurrentSlug] = useState<string>('')
+  const [isLoading, setIsLoading] = useState(true)
+  const [services, setServices] = useState<Service[]>([])
+
+  useEffect(() => {
+    const loadSlug = async () => {
+      try {
+        setIsLoading(true)
+        const resolvedSlug = await slug
+        setCurrentSlug(resolvedSlug)
+        setServices(subCategories[resolvedSlug] || [])
+      } catch (error) {
+        console.error('Error loading category:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    loadSlug()
+  }, [slug])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#F8F8F8] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-4 border-[#06C167] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-500">Loading services...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!currentSlug || services.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#F8F8F8] flex items-center justify-center">
+        <div className="text-center px-4">
+          <p className="text-gray-500">No services found for this category.</p>
+          <Link href="/">
+            <Button 
+              variant="ghost"
+              className="mt-4 text-[#06C167] hover:text-[#06C167] hover:bg-[#06C167]/10"
+            >
+              Return to Home
+            </Button>
+          </Link>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-[#F8F8F8]">
@@ -24,7 +77,7 @@ export function CategoryContent({ slug }: { slug: string }) {
               </Button>
             </Link>
             <h1 className="text-xl font-semibold ml-2 text-black capitalize">
-              {slug.replace('-', ' ')}
+              {currentSlug.replace('-', ' ')}
             </h1>
           </div>
         </div>
@@ -43,7 +96,7 @@ export function CategoryContent({ slug }: { slug: string }) {
           {services.map((service) => (
             <Link
               key={service.name}
-              href={`/subcategory/${slug}/${encodeURIComponent(service.name)}`}
+              href={`/subcategory/${currentSlug}/${encodeURIComponent(service.name)}`}
               className="block"
             >
               <div className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
