@@ -8,28 +8,17 @@ import { subCategories } from './data'
 import type { Service } from './data'
 
 interface CategoryContentProps {
-  slug: Promise<string>;
+  slug: string;
 }
 
 export function CategoryContent({ slug }: CategoryContentProps) {
-  const [currentSlug, setCurrentSlug] = useState<string>('')
   const [isLoading, setIsLoading] = useState(true)
   const [services, setServices] = useState<Service[]>([])
 
   useEffect(() => {
-    const loadSlug = async () => {
-      try {
-        setIsLoading(true)
-        const resolvedSlug = await slug
-        setCurrentSlug(resolvedSlug)
-        setServices(subCategories[resolvedSlug] || [])
-      } catch (error) {
-        console.error('Error loading category:', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-    loadSlug()
+    setIsLoading(true)
+    setServices(subCategories[slug] || [])
+    setIsLoading(false)
   }, [slug])
 
   if (isLoading) {
@@ -43,7 +32,7 @@ export function CategoryContent({ slug }: CategoryContentProps) {
     )
   }
 
-  if (!currentSlug || services.length === 0) {
+  if (services.length === 0) {
     return (
       <div className="min-h-screen bg-[#F8F8F8] flex items-center justify-center">
         <div className="text-center px-4">
@@ -77,7 +66,7 @@ export function CategoryContent({ slug }: CategoryContentProps) {
               </Button>
             </Link>
             <h1 className="text-xl font-semibold ml-2 text-black capitalize">
-              {currentSlug.replace('-', ' ')}
+              {slug.replace('-', ' ')}
             </h1>
           </div>
         </div>
@@ -96,7 +85,7 @@ export function CategoryContent({ slug }: CategoryContentProps) {
           {services.map((service) => (
             <Link
               key={service.name}
-              href={`/subcategory/${currentSlug}/${encodeURIComponent(service.name)}`}
+              href={`/subcategory/${slug}/${encodeURIComponent(service.name)}`}
               className="block"
             >
               <div className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
