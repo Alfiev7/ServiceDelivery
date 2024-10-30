@@ -1,101 +1,114 @@
-import Image from "next/image";
+'use client'
 
-export default function Home() {
+import { useState } from 'react'
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import Link from 'next/link'
+import { MapPin, Search, Clock, ChevronRight } from 'lucide-react'
+
+const mainCategories = [
+  {
+    name: "Cleaner",
+    description: "Professional cleaning services",
+    icon: "🧹",
+    eta: "Arrives in 30 min"
+  },
+  {
+    name: "Handyman",
+    description: "Expert repairs and installations",
+    icon: "🔧",
+    eta: "Arrives in 45 min"
+  },
+  {
+    name: "Plumber",
+    description: "Quick solutions for plumbing needs",
+    icon: "🚰",
+    eta: "Arrives in 35 min"
+  },
+  {
+    name: "Aircon Technician",
+    description: "AC repairs and maintenance",
+    icon: "❄️",
+    eta: "Arrives in 40 min"
+  },
+  {
+    name: "Electrician",
+    description: "Professional electrical services",
+    icon: "⚡",
+    eta: "Arrives in 30 min"
+  },
+  {
+    name: "Tire Change",
+    description: "Mobile tire change and repair",
+    icon: "🚗",
+    eta: "Arrives in 25 min"
+  }
+]
+
+export default function HomePage() {
+  const [location, setLocation] = useState("Tel Aviv")
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="min-h-screen bg-[#F8F8F8]">
+      {/* Header */}
+      <div className="fixed top-0 left-0 right-0 bg-white z-10">
+        <div className="max-w-xl mx-auto px-4 py-2">
+          <div className="flex items-center space-x-4">
+            <div className="flex-1">
+              <div className="flex items-center space-x-3 bg-[#EEEEEE] rounded-full px-4 py-2.5">
+                <MapPin className="h-5 w-5 text-black" />
+                <input
+                  type="text"
+                  placeholder="Enter location"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="bg-transparent border-none focus:outline-none text-black placeholder:text-gray-500 w-full"
+                />
+              </div>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="icon"
+              className="rounded-full bg-[#EEEEEE] h-12 w-12"
+            >
+              <Search className="h-5 w-5 text-black" />
+            </Button>
+          </div>
+        </div>
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Main Content */}
+      <main className="max-w-xl mx-auto pt-20 pb-20 px-4">
+        <h1 className="text-2xl font-bold text-black mb-2">Services</h1>
+        <p className="text-gray-500 mb-6">Book professional services at your doorstep</p>
+
+        <div className="space-y-4">
+          {mainCategories.map((category) => (
+            <Link 
+              href={`/category/${category.name.toLowerCase().replace(' ', '-')}`} 
+              key={category.name}
+              className="block"
+            >
+              <div className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <div className="text-3xl">{category.icon}</div>
+                    <div>
+                      <h2 className="font-semibold text-black">{category.name}</h2>
+                      <div className="flex items-center space-x-2 mt-1">
+                        <Clock className="h-4 w-4 text-[#06C167]" />
+                        <span className="text-sm text-[#06C167]">{category.eta}</span>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-1">{category.description}</p>
+                    </div>
+                  </div>
+                  <ChevronRight className="h-5 w-5 text-gray-400" />
+                </div>
+              </div>
+            </Link>
+          ))}
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
-  );
+  )
 }
