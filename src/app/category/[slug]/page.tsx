@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { CategoryContent } from './category-content'
+import { LoadingSpinner } from '@/components/loading'
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -13,7 +14,7 @@ export default async function CategoryPage({
   try {
     const resolvedParams = await params;
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <CategoryContent slug={resolvedParams.slug} />
       </Suspense>
     )

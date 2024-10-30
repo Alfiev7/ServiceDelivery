@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { PaymentContent } from './payment-content'
+import { LoadingSpinner } from '@/components/loading'
 
 interface PageProps {
   params: Promise<{ category: string; service: string; price: string }>;
@@ -13,7 +14,7 @@ export default async function PaymentPage({
   try {
     const resolvedParams = await params;
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <PaymentContent 
           category={resolvedParams.category}
           service={resolvedParams.service}

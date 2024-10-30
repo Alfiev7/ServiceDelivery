@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 import { SubCategoryContent } from './subcategory-content'
+import { LoadingSpinner } from '@/components/loading'
 
 interface PageProps {
   params: Promise<{ category: string; service: string }>;
@@ -13,7 +14,7 @@ export default async function SubCategoryPage({
   try {
     const resolvedParams = await params;
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LoadingSpinner />}>
         <SubCategoryContent 
           category={resolvedParams.category} 
           service={resolvedParams.service}
