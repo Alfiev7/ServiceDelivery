@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { SubCategoryContent } from './subcategory-content.tsx'
+import { SubCategoryContent } from './subcategory-content'
 
 interface PageProps {
   params: Promise<{ category: string; service: string }>;

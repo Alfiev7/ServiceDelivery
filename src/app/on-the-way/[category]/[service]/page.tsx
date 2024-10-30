@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { OnTheWayContent } from './on-the-way-content.tsx'
+import { OnTheWayContent } from './on-the-way-content'
 
 interface PageProps {
   params: Promise<{ category: string; service: string }>;

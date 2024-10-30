@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { ReviewContent } from './review-content.tsx'
+import { ReviewContent } from './review-content'
 
 interface PageProps {
   params: Promise<{ category: string; service: string }>;

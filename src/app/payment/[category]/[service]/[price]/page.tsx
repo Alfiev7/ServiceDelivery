@@ -1,5 +1,5 @@
 import { Suspense } from 'react'
-import { PaymentContent } from './payment-content.tsx'
+import { PaymentContent } from './payment-content'
 
 interface PageProps {
   params: Promise<{ category: string; service: string; price: string }>;
