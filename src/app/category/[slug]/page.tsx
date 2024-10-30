@@ -17,7 +17,14 @@ type Categories = {
   [key: string]: Service[];
 }
 
-// Define the subCategories object first
+// Define the props type correctly for Next.js App Router
+type Props = {
+  params: {
+    slug: string;
+  };
+  searchParams: { [key: string]: string | string[] | undefined };
+}
+
 const subCategories: Categories = {
   cleaner: [
     { name: "Deep cleaning", price: "From $80", rating: 4.8, time: "2-3 hours" },
@@ -88,7 +95,7 @@ const subCategories: Categories = {
   ]
 }
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
+export default function CategoryPage({ params, searchParams }: Props) {
   const router = useRouter()
   const category = params.slug
   const services = subCategories[category] || []
