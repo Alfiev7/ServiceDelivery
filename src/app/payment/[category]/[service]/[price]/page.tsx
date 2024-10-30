@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, CreditCard, Clock, Shield } from 'lucide-react'
+import { ChevronLeft, CreditCard } from 'lucide-react'
 
 export default function PaymentPage({ params }: { params: { category: string, service: string, price: string } }) {
   const router = useRouter()
