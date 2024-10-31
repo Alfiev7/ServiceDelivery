@@ -38,18 +38,19 @@ export function SubCategoryContent({ category, service }: SubCategoryContentProp
           {/* Service Info */}
           <div className="p-6 border-b border-gray-100">
             <h2 className="text-2xl font-bold text-black mb-2">{decodeURIComponent(service)}</h2>
-            <div className="flex items-center space-x-4 mb-4">
+            <div className="flex flex-col space-y-2 mb-4">
               <div className="flex items-center">
-                <Star className="h-4 w-4 text-[#06C167] mr-1" />
-                <span className="text-sm font-medium">4.8 (2.5k reviews)</span>
+                <Star className="h-5 w-5 text-[#06C167] mr-1" />
+                <span className="text-sm font-medium text-gray-700">4.8</span>
+                <span className="text-sm text-gray-500 ml-1">(2.5k reviews)</span>
               </div>
               <div className="flex items-center text-gray-500">
-                <Clock className="h-4 w-4 mr-1" />
+                <Clock className="h-5 w-5 mr-1" />
                 <span className="text-sm">35-45 min</span>
               </div>
             </div>
             <div className="flex items-center space-x-2 text-[#06C167] mb-4">
-              <Shield className="h-4 w-4" />
+              <Shield className="h-5 w-5" />
               <span className="text-sm font-medium">Professional service guarantee</span>
             </div>
             <div className="text-3xl font-bold text-black">${price}</div>
@@ -61,7 +62,7 @@ export function SubCategoryContent({ category, service }: SubCategoryContentProp
               <MapPin className="h-5 w-5 text-[#06C167]" />
               <div>
                 <h3 className="font-semibold text-black">Service Location</h3>
-                <p className="text-sm text-gray-500">Tel Aviv, Israel</p>
+                <p className="text-sm text-gray-600">Tel Aviv, Israel</p>
               </div>
             </div>
           </div>
