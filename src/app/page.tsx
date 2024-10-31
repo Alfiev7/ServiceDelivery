@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
-import { MapPin, Bell, Search, Home, Menu, User, ShoppingBag, ImageIcon, ArrowRight } from 'lucide-react'
-import Image from 'next/image'
+import { MapPin, Bell, Search, Home, Menu, User, ShoppingBag, ImageIcon } from 'lucide-react'
+import Image, { ImageProps } from 'next/image'
 
 const categories = [
   { name: "Cleaner", icon: "🧹", link: "cleaner" },
@@ -34,7 +34,11 @@ const featuredServices = [
   }
 ]
 
-const ImageWithFallback = ({ src, alt, ...props }) => {
+interface ImageWithFallbackProps extends Omit<ImageProps, 'src'> {
+  src: string;
+}
+
+const ImageWithFallback: React.FC<ImageWithFallbackProps> = ({ src, alt, ...props }) => {
   const [error, setError] = useState(false)
 
   if (error) {
@@ -92,10 +96,9 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-transparent"></div>
             <div className="absolute inset-0 flex items-center">
               <div className="p-6 w-2/3">
-                <h2 className="text-2xl font-bold mb-4 text-white drop-shadow-md">Claim your daily service discount now!</h2>
-                <Button className="bg-white text-blue-600 hover:bg-blue-50 rounded-full px-6 py-2 font-semibold transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg flex items-center">
+                <h2 className="text-2xl font-bold mb-2 text-white drop-shadow-md">Claim your daily service discount now!</h2>
+                <Button className="bg-white text-blue-600 hover:bg-blue-50 rounded-full px-6 py-2 font-semibold transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
                   Book now
-                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
             </div>
